@@ -36,11 +36,6 @@ export const bodyParamsDocGenerators = (
   body.forEach(({ name, schema, type, ...other }) => {
     // can't destruct "in" bcoz a reserved keyword;
 
-    // name==="body" indicates it has a params for which a modal exist in definitions
-    //  so we just comment meta info here and link to that modal below example code
-    // else just name: type of param, stringify other info and comment
-    // if there is a object in other info just JSON.stringify
-
     if (name === "body") {
       const definition = definitions[getDefinitionKey(schema)];
       storeMarkdown.push(

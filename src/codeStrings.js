@@ -118,7 +118,7 @@ class ${sdkName} {
   // --utils method for sdk class
   setHeader(key, value) {
     // Set optional header
-    this.configs.header[key] = value;
+    this.configs.headers[key] = value;
     window.localStorage.setItem(key, value);
   }
 
@@ -257,7 +257,7 @@ ${
     : ""
 }
 class ${sdkName} {
-  constructor(disptach, headersObj ={}) {${
+  constructor(dispatch, headersObj ={}) {${
     version ? "\n    this.version =" : ""
   }'${version}'
     this.dispatch = dispatch;
@@ -382,7 +382,7 @@ class ${sdkName} {
   // --utils method for sdk class
   setHeader(key, value) {
     // Set optional header
-    this.configs.header[key] = value;
+    this.configs.headers[key] = value;
     window.localStorage.setItem(key, value);
   }
 
@@ -396,7 +396,7 @@ class ${sdkName} {
   // --utils method for sdk class
   clearHeader(key) {
     // Clear optional header
-    this.configs.header[key] = '';
+    this.configs.headers[key] = '';
     window.localStorage.removeItem(key);
   }
 
@@ -442,7 +442,7 @@ export const reducerStrings = ({ sdkName }) => {
 
 export const connect = function(a, b) {
   const mapState = ({ ${sdkName}Reducer, ...otherState }) => {
-    if (isArray(a)) {
+    if (Array.isArray(a)) {
       let obj = {};
       a.forEach(key => {
         obj[key] = ${sdkName}Reducer[key];
