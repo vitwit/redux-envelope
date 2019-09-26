@@ -19,7 +19,7 @@ function parseArgumentsIntoOptions(rawArgs) {
       "--with-redux-configs": Boolean,
       // Aliases
       "-f": "--json-file",
-      "-f": "--js-file",
+      "-j": "--js-file",
       "-v": "--version",
       "-b": "--base-url",
       "-h": "--help",
@@ -45,7 +45,7 @@ function parseArgumentsIntoOptions(rawArgs) {
     printManPage();
     process.exit(1);
   }
-
+console.log(args,'arags')
   return {
     requiredHeaders: args["--required-headers"],
     optionalHeaders: args["--optional-headers"],
@@ -60,7 +60,7 @@ function parseArgumentsIntoOptions(rawArgs) {
 
 export async function cli(args) {
   let options = parseArgumentsIntoOptions(args);
-
+ 
   if (!options.jsonFile) {
     console.error("%s --json-file is required", chalk.red.bold("ERROR"));
     process.exit(1);

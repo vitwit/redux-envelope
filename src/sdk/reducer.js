@@ -25,7 +25,7 @@ const initialState ={
   deleteUserRes:{},
 }
 
-export function yashReducer(state = initialState, action) {
+export function yourReducer(state = initialState, action) {
   return {
     ...state,
     [action.type]: {
@@ -38,15 +38,15 @@ export function yashReducer(state = initialState, action) {
 // helper function to use this syntax connect(['getUserRes'])(App)
 
 export const connect = function(a, b) {
-  const mapState = ({ yashReducer, ...otherState }) => {
+  const mapState = ({ yourReducer, ...otherState }) => {
     if (Array.isArray(a)) {
       let obj = {};
       a.forEach(key => {
-        obj[key] = yashReducer[key];
+        obj[key] = yourReducer[key];
       });
       return obj;
     } else {
-      return a({ yashReducer, otherState });
+      return a({ yourReducer, otherState });
     }
   };
   return reactRedux.connect(mapState, b);

@@ -5,7 +5,7 @@ import {
   responseMarkdown,
   operationMarkdownEnd,
   appendModalLink
-} from "./codeStrings";
+} from "./code-strings/docs";
 import {
   getDefinitionKey,
   removeKeys,
@@ -190,11 +190,11 @@ export const docGenerator = ({ jsonFile, name }) => {
     });
     generateModalsReadMeForSwagger(_jsonFile);
   }
-  const dir = "sdk";
+  const dir = "src/sdk";
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir);
   }
-  fs.writeFile("sdk/README.md", storeMarkdown.join(""), err => {
+  fs.writeFile("src/sdk/README.md", storeMarkdown.join(""), err => {
     if (err) throw err;
   });
 };

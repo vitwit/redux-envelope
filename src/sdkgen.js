@@ -1,15 +1,14 @@
 import chalk from "chalk";
 import fs from "fs";
+import { endString ,stringOne,functionSignature} from "./code-strings/codgen";
 import {
-  stringOne,
-  functionSignature,
-  endString,
   stringOneWithActions,
-  actionCreatorSignature,
   initialStateEndString,
   initialStateKeyValuesString,
-  initialStateStartString
-} from "./codeStrings";
+  initialStateStartString,
+  actionCreatorSignature
+} from "./code-strings/reduxCodeStrings";
+
 import {
   extractPathParams,
   toCamelCase,
@@ -159,17 +158,17 @@ export async function generateSDK({
   }
   storeInitialStateInThisArr.push(initialStateEndString);
   storeJsCodeInThisArr.push(endString);
-  const dir = "sdk";
+  const dir = "src/sdk";
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir);
   }
   if (jsFile) {
-    cp(jsFile, "sdk/transformOperations.js", (err, res) => {
+    cp(jsFile, "src/sdk/transformOperations.js", (err, res) => {
       if (err) throw err;
     });
   }
 
-  fs.writeFile("sdk/" + name + ".js", storeJsCodeInThisArr.join(""), err => {
+  fs.writeFile("src/sdk/" + name + ".js", storeJsCodeInThisArr.join(""), err => {
     if (err) throw err;
   });
   return storeInitialStateInThisArr.join("");
