@@ -213,7 +213,6 @@ export const responseMarkdown = ({ resCode, json }) =>
   `\n> ${resCode}\n\`\`\`json\n${JSON.stringify(json, null, 2)}\n\`\`\`\n`;
 
 export function actionCreatorSignature({
-  hasPathParams,
   operationName,
   transformResponse,
   url,
@@ -221,20 +220,14 @@ export function actionCreatorSignature({
   isFormData
 }) {
   return `
-  ${operationName}({ _params,_pathParams${
-    requestMethod === "PUT" || requestMethod === "POST" ? ",..._data" : ""
-  } } = {}) {
+  ${operationName}(data) {
     return this.fetchApi({
       operationName:'${operationName}',
       method: "${requestMethod}",${
     isFormData ? "\n      isFormData: true," : ""
   }
-      _url: '${url}',${
-    requestMethod === "PUT" || requestMethod === "POST" ? "\n       _data," : ""
-  }
-      _params,${hasPathParams ? "\n      _pathParams," : ""}${
-    transformResponse ? getTransformResString(operationName) : ""
-  }
+      _url: '${url}',
+       data,${transformResponse ? getTransformResString(operationName) : ""}
     });
   }
   
@@ -259,7 +252,7 @@ ${
 class ${sdkName} {
   constructor(dispatch, headersObj ={}) {${
     version ? "\n    this.version =" : ""
-  }'${version}'
+  }${version ? version : ""}
     this.dispatch = dispatch;
     this.requiredHeaders = '${requiredHeaders}';
     this.optionalHeaders = '${optionalHeaders}';
@@ -298,18 +291,19 @@ class ${sdkName} {
   }
   
   fetchApi({
-    operationName,
     isFormData,
     method,
-    _data,
+    data,
     _url,
-    _params = {},
-    transformResponse,
-    _pathParams = [],
-    headerConfigs = {}
+    transformResponse
   }) {
+    let _operationName = operationName;
+    const {_params,_pathParams,..._data}=data;
+    if(_data.operationName){
+      _operationName = _data.operationName;
+    }
     this.dispatch({
-      type:operationName + 'Res',
+      type:_operationName + 'Res',
       payload:{
         loading:true
       }
@@ -350,7 +344,7 @@ class ${sdkName} {
         });
         obj.data = resObj.data;
         this.dispatch({
-          type: operationName + "Res",
+          type: _operationName + "Res",
           payload:{
             loading:false,
             data:resObj.data,
@@ -367,7 +361,7 @@ class ${sdkName} {
           obj.error = error.message;
         }
         this.dispatch({
-          type: operationName + "Res",
+          type: _operationName + "Res",
           payload:{
             loading:false,
             error:obj.error,
@@ -377,6 +371,26 @@ class ${sdkName} {
         resolve(obj);
       }
     });
+  }
+  
+  // intercept response
+  interceptResponse(cb) {
+    // just want to make user provide one callback,so mergin to callbacks
+    const cb1 = r => cb(r);
+    const cb2 = e => cb(undefined, e);
+    this.axiosInstance.interceptors.response.use(cb1, cb2);
+  }
+
+  interceptRequest(cb) {
+    // first we need to eject the callback we are already using
+
+    this.axiosInstance.interceptors.request.eject(this.requestInterceptor);
+    const cb1 = c => cb(c, undefined);
+    const cb2 = e => cb(undefined, e);
+    this.requestInterceptor = this.axiosInstance.interceptors.request.use(
+      cb1,
+      cb2
+    );
   }
 
   // --utils method for sdk class

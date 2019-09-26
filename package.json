@@ -1,15 +1,14 @@
 {
-  "name": "@vitwit/js-sdkgen",
+  "name": "@vitwit/redux-sdkgen",
   "version": "1.0.3",
-  "description": "JavaScript SDK generator from api doc's json file, go-docs and swagger support by default,or any json file with given shape.",
+  "description": "Removes the boilerplate code for Redux apps with auto genereated SDK",
   "main": "src/index.js",
   "bin": {
-    "js-sdkgen": "bin/js-sdkgen"
-  },
-  "publishConfig": {
-    "access": "public"
+    "redux-sdkgen": "bin/redux-sdkgen"
   },
   "keywords": [
+    "redux",
+    "react",
     "generator",
     "code",
     "sdk generator",
@@ -37,7 +36,7 @@
     "src/"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -46,5 +45,12 @@
   "bugs": {
     "url": "https://github.com/vitwit/SDKGen/issues"
   },
-  "homepage": "https://github.com/vitwit/SDKGen#readme"
+  "homepage": "https://github.com/vitwit/SDKGen#readme",
+  "devDependencies": {
+    "eslint": "^6.4.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1"
+  }
 }

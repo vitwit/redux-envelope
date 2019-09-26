@@ -1,5 +1,4 @@
 import chalk from "chalk";
-import { isArray } from "util";
 
 export function toCamelCase(s = "") {
   return s
@@ -26,9 +25,9 @@ export const printManPage = () => {
     ${chalk.gray.bold("Flags")}             ${chalk.gray.bold("Usage")}
     `
   );
-  const manPage = `  --jsonFile:         String, --jsonFile filename.json or --jsonFile=filename.json or --jsonFile ../Downloads/filename.json
+  const manPage = `  --json-file:         String, --jsonFile filename.json or --jsonFile=filename.json or --jsonFile ../Downloads/filename.json
 
-  --jsFile:           String   
+  --js-file:           String   
   
   --version:          String
   
@@ -44,8 +43,8 @@ export const printManPage = () => {
 
  ${chalk.gray.bold("or you can you use the following aliases")}
 
-  -f: --jsonFile
-  -j: --jsFile
+  -f: --json-file
+  -j: --js-file
   -v: --version
   -b: --baseUrl
   -o: --optionalHeaders

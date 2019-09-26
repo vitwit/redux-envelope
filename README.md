@@ -1,4 +1,4 @@
-# Redux-without-boilerplate
+# vRedux
 
 ## It completly removes the Redux's boilerplate it had been always critcized for, no need to write any action creator or any reducer.
 
@@ -12,7 +12,7 @@ It does one extra things from `js-sdkgen`.
 Given the swaggger.json file in root folder of the repo, running below command will generate the code in sdk folder of the repo.
 
 ```sh
-node bin/js-sdkgen --json-file swagger.json  --name myApp --version 1.0.0 --base-url="https://vitwit.com" --required-headers name,lastname --optional-headers token --with-redux-configs
+vRedux --json-file swagger.json  --name myApp --version 1.0.0 --base-url="https://vitwit.com" --required-headers name,lastname --optional-headers token --with-redux-configs
 ```
 
 **Follow the below steps to configure**

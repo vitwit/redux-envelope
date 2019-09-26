@@ -4,14 +4,8 @@ import {
   stringOne,
   functionSignature,
   endString,
-  markdownStartString,
-  appendModalLink,
-  markdownCodeBlockEnd,
-  operationMarkdownEnd,
-  responseMarkdown,
   stringOneWithActions,
   actionCreatorSignature,
-  reducerStrings,
   initialStateEndString,
   initialStateKeyValuesString,
   initialStateStartString
@@ -20,14 +14,10 @@ import {
   extractPathParams,
   toCamelCase,
   toTitleCase,
-  notEmptyObj,
-  getDefinitionKey,
-  removeKeys,
   isGoJson,
   isSwaggerJson
 } from "./utils";
 import cp from "cp";
-import { modalsLinkMarkdown } from "./docGen";
 
 export async function generateSDK({
   jsonFile,
@@ -98,14 +88,12 @@ export async function generateSDK({
       );
     }
     if (isSwaggerGenerated) {
-      const tags = _jsonFile.tags;
       const pathsData = _jsonFile.paths;
       Object.entries(pathsData).map(path => {
         const url = path[0];
         Object.entries(path[1]).forEach(method => {
           const requestMethod = method[0];
           const methodData = method[1];
-          const apiGroup = (methodData.tags || ["common"])[0];
           const operationName = methodData.operationId;
           const consumes = methodData.consumes || [];
           const isFormData = consumes.includes("multipart/form-data");
@@ -133,7 +121,6 @@ export async function generateSDK({
       _jsonFile.map(api => {
         const url = api.url;
         const requestMethod = api.type;
-        const apiGroup = api.group;
         const operationName = toCamelCase(api.name);
         const isFormData =
           api.parameter &&
