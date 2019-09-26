@@ -8,7 +8,7 @@ addPet
  **Example**
 
  ```js
- const  { data, error } = await myApp.addPet({
+ const  { data, error } = await yash.addPet({
   /** Pet modal, description-Pet object that needs to be added to the store,required-true */
 })
 ```
@@ -36,7 +36,7 @@ updatePet
  **Example**
 
  ```js
- const  { data, error } = await myApp.updatePet({
+ const  { data, error } = await yash.updatePet({
   /** Pet modal, description-Pet object that needs to be added to the store,required-true */
 })
 ```
@@ -70,7 +70,7 @@ findPetsByStatus
  **Example**
 
  ```js
- const  { data, error } = await myApp.findPetsByStatus({
+ const  { data, error } = await yash.findPetsByStatus({
   _params: {
    status:array, /** description-Status values that need to be considered for filter,required-true,items-{"type"-"string","enum"-["available","pending","sold"],"default"-"available"},collectionFormat-multi */ 
   }
@@ -115,7 +115,7 @@ findPetsByTags
  **Example**
 
  ```js
- const  { data, error } = await myApp.findPetsByTags({
+ const  { data, error } = await yash.findPetsByTags({
   _params: {
    tags:array, /** description-Tags to filter by,required-true,items-{"type"-"string"},collectionFormat-multi */ 
   }
@@ -160,7 +160,7 @@ getPetById
  **Example**
 
  ```js
- const  { data, error } = await myApp.getPetById({
+ const  { data, error } = await yash.getPetById({
   _pathParams: {
    petId:integer, /** description-ID of pet to return,required-true,format-int64 */ 
   }
@@ -205,7 +205,7 @@ updatePetWithForm
  **Example**
 
  ```js
- const  { data, error } = await myApp.updatePetWithForm({
+ const  { data, error } = await yash.updatePetWithForm({
  name:string, /** description-Updated name of the pet,required-false */
  status:string, /** description-Updated status of the pet,required-false */
   _pathParams: {
@@ -237,7 +237,7 @@ deletePet
  **Example**
 
  ```js
- const  { data, error } = await myApp.deletePet({
+ const  { data, error } = await yash.deletePet({
   _pathParams: {
    petId:integer, /** description-Pet id to delete,required-true,format-int64 */ 
   }
@@ -270,7 +270,7 @@ uploadFile
  **Example**
 
  ```js
- const  { data, error } = await myApp.uploadFile({
+ const  { data, error } = await yash.uploadFile({
  additionalMetadata:string, /** description-Additional data to pass to server,required-false */
  file:file, /** description-file to upload,required-false */
   _pathParams: {
@@ -305,7 +305,7 @@ getInventory
  **Example**
 
  ```js
- const  { data, error } = await myApp.getInventory({
+ const  { data, error } = await yash.getInventory({
 
 })
 ```
@@ -340,7 +340,7 @@ placeOrder
  **Example**
 
  ```js
- const  { data, error } = await myApp.placeOrder({
+ const  { data, error } = await yash.placeOrder({
   /** Order modal, description-order placed for purchasing the pet,required-true */
 })
 ```
@@ -380,7 +380,7 @@ getOrderById
  **Example**
 
  ```js
- const  { data, error } = await myApp.getOrderById({
+ const  { data, error } = await yash.getOrderById({
   _pathParams: {
    orderId:integer, /** description-ID of pet that needs to be fetched,required-true,maximum-10,minimum-1,format-int64 */ 
   }
@@ -425,7 +425,7 @@ deleteOrder
  **Example**
 
  ```js
- const  { data, error } = await myApp.deleteOrder({
+ const  { data, error } = await yash.deleteOrder({
   _pathParams: {
    orderId:integer, /** description-ID of the order that needs to be deleted,required-true,minimum-1,format-int64 */ 
   }
@@ -458,7 +458,7 @@ createUser
  **Example**
 
  ```js
- const  { data, error } = await myApp.createUser({
+ const  { data, error } = await yash.createUser({
   /** User modal, description-Created user object,required-true */
 })
 ```
@@ -486,7 +486,7 @@ createUsersWithArrayInput
  **Example**
 
  ```js
- const  { data, error } = await myApp.createUsersWithArrayInput({
+ const  { data, error } = await yash.createUsersWithArrayInput({
   /** User modal,type - array, description-List of user object,required-true */
 })
 ```
@@ -514,7 +514,7 @@ createUsersWithListInput
  **Example**
 
  ```js
- const  { data, error } = await myApp.createUsersWithListInput({
+ const  { data, error } = await yash.createUsersWithListInput({
   /** User modal,type - array, description-List of user object,required-true */
 })
 ```
@@ -542,7 +542,7 @@ loginUser
  **Example**
 
  ```js
- const  { data, error } = await myApp.loginUser({
+ const  { data, error } = await yash.loginUser({
   _params: {
    username:string, /** description-The user name for login,required-true */ 
    password:string, /** description-The password for login in clear text,required-true */ 
@@ -597,7 +597,7 @@ logoutUser
  **Example**
 
  ```js
- const  { data, error } = await myApp.logoutUser({
+ const  { data, error } = await yash.logoutUser({
 
 })
 ```
@@ -625,7 +625,7 @@ getUserByName
  **Example**
 
  ```js
- const  { data, error } = await myApp.getUserByName({
+ const  { data, error } = await yash.getUserByName({
   _pathParams: {
    username:string, /** description-The name that needs to be fetched. Use user1 for testing. ,required-true */ 
   }
@@ -670,7 +670,7 @@ updateUser
  **Example**
 
  ```js
- const  { data, error } = await myApp.updateUser({
+ const  { data, error } = await yash.updateUser({
   /** User modal, description-Updated user object,required-true */  _pathParams: {
    username:string, /** description-name that need to be updated,required-true */ 
   }
@@ -703,7 +703,7 @@ deleteUser
  **Example**
 
  ```js
- const  { data, error } = await myApp.deleteUser({
+ const  { data, error } = await yash.deleteUser({
   _pathParams: {
    username:string, /** description-The name that needs to be deleted,required-true */ 
   }
