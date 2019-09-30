@@ -1,12 +1,14 @@
 
 import axios from "axios";
 
-class Yournamesdk {
-  constructor(dispatch, headersObj ={}) {
-    this.dispatch = dispatch;
+
+export default class Mysdk {
+  constructor( headersObj ={}) {
+    this.version ='1.0.0'
     this.requiredHeaders = '';
     this.optionalHeaders = '';
-    this.name = "Yournamesdk";
+    this.name = "mysdk";
+
     if(this.requiredHeaders){
       this.requiredHeaders.split(',').forEach(header => {
         if (Object.keys(headersObj).indexOf(header) < 0) {
@@ -14,15 +16,18 @@ class Yournamesdk {
         }
       });
     }
+
     this.configs = {
-      baseURL: "",
+      baseURL: "localhost.com",
       headers: {
         ...headersObj,
       }
     }
+
     const instance = axios.create({
       ...this.configs
     });
+
     // get authorization on every request
     instance.interceptors.request.use(
       configs => {
@@ -33,38 +38,32 @@ class Yournamesdk {
         }
         configs.headers = this.configs.headers
         configs.baseURL = this.configs.baseURL
+
         return configs
       },
       error => Promise.reject(error)
     );
+
     this.axiosInstance = instance;
   }
   
   fetchApi({
-    operationName,
     isFormData,
     method,
-    data={},
+    data = {},
     _url,
     transformResponse
   }) {
-    let _operationName = operationName;
-    const {_params={},_pathParams={},..._data}=data;
-    if(_data.operationName){
-      _operationName = _data.operationName;
-    }
-    this.dispatch({
-      type:_operationName + 'Res',
-      payload:{
-        loading:true
-      }
-    })
+    const { _params = {}, _pathParams = {}, ..._data } = data;
+    // eslint-disable-next-line
     return new Promise(async resolve => {
       const obj = {
         error: null,
         data: null
       };
+
       let data = _data;
+
       if (isFormData) {
         const formdata = new FormData();
         Object.entries(_data).forEach(arr => {
@@ -94,14 +93,6 @@ class Yournamesdk {
             : {})
         });
         obj.data = resObj.data;
-        this.dispatch({
-          type: _operationName + "Res",
-          payload:{
-            loading:false,
-            data:resObj.data,
-            error:null
-          }
-        })
         resolve(obj);
       } catch (error) {
         if (error.response) {
@@ -111,19 +102,10 @@ class Yournamesdk {
         } else {
           obj.error = error.message;
         }
-        this.dispatch({
-          type: _operationName + "Res",
-          payload:{
-            loading:false,
-            error:obj.error,
-            data:null
-          }
-        })
         resolve(obj);
       }
     });
   }
-  
   // intercept response
   interceptResponse(cb) {
     // just want to make user provide one callback,so mergin to callbacks
@@ -144,10 +126,15 @@ class Yournamesdk {
     );
   }
 
-  // --utils method for sdk class
+
+  // utils method for sdk class
   setHeader(key, value) {
     // Set optional header
-    this.configs.headers[key] = value;
+    this.configs.header[key] = value;
+
+    // storing in local storage to retrieve after reloads
+    // if you are managing refresh token and just storing token in memory
+    // than instead of using set Headers, just use interceptRequest and interceptResponse methods
     window.localStorage.setItem(key, value);
   }
 
@@ -161,7 +148,7 @@ class Yournamesdk {
   // --utils method for sdk class
   clearHeader(key) {
     // Clear optional header
-    this.configs.headers[key] = '';
+    this.configs.header[key] = '';
     window.localStorage.removeItem(key);
   }
 

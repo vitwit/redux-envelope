@@ -1,6 +1,11 @@
+import { utils } from "yash300";
 
-export const stringOne = ({
-  sdkName = "YourSDK",
+const { toCamelCase ,getTransformResString} = utils;
+
+
+
+export const stringOneWithActions = ({
+  sdkName,
   version,
   baseUrl,
   requiredHeaders,
@@ -15,9 +20,10 @@ ${
     : ""
 }
 class ${sdkName} {
-  constructor( headersObj ={}) {${
+  constructor(dispatch, headersObj ={}) {${
     version ? "\n    this.version =" : ""
-  }'${version}'
+  }${version || ""}
+    this.dispatch = dispatch;
     this.requiredHeaders = '${requiredHeaders}';
     this.optionalHeaders = '${optionalHeaders}';
     this.name = "${sdkName}";
@@ -55,15 +61,24 @@ class ${sdkName} {
   }
   
   fetchApi({
+    operationName,
     isFormData,
     method,
-    _data,
+    data={},
     _url,
-    _params = {},
-    transformResponse,
-    _pathParams = [],
-    headerConfigs = {}
+    transformResponse
   }) {
+    let _operationName = operationName;
+    const {_params={},_pathParams={},..._data}=data;
+    if(_data.operationName){
+      _operationName = _data.operationName;
+    }
+    this.dispatch({
+      type:_operationName + 'Res',
+      payload:{
+        loading:true
+      }
+    })
     return new Promise(async resolve => {
       const obj = {
         error: null,
@@ -99,6 +114,14 @@ class ${sdkName} {
             : {})
         });
         obj.data = resObj.data;
+        this.dispatch({
+          type: _operationName + "Res",
+          payload:{
+            loading:false,
+            data:resObj.data,
+            error:null
+          }
+        })
         resolve(obj);
       } catch (error) {
         if (error.response) {
@@ -108,9 +131,37 @@ class ${sdkName} {
         } else {
           obj.error = error.message;
         }
+        this.dispatch({
+          type: _operationName + "Res",
+          payload:{
+            loading:false,
+            error:obj.error,
+            data:null
+          }
+        })
         resolve(obj);
       }
     });
+  }
+  
+  // intercept response
+  interceptResponse(cb) {
+    // just want to make user provide one callback,so mergin to callbacks
+    const cb1 = r => cb(r);
+    const cb2 = e => cb(undefined, e);
+    this.axiosInstance.interceptors.response.use(cb1, cb2);
+  }
+
+  interceptRequest(cb) {
+    // first we need to eject the callback we are already using
+
+    this.axiosInstance.interceptors.request.eject(this.requestInterceptor);
+    const cb1 = c => cb(c, undefined);
+    const cb2 = e => cb(undefined, e);
+    this.requestInterceptor = this.axiosInstance.interceptors.request.use(
+      cb1,
+      cb2
+    );
   }
 
   // --utils method for sdk class
@@ -130,7 +181,7 @@ class ${sdkName} {
   // --utils method for sdk class
   clearHeader(key) {
     // Clear optional header
-    this.configs.header[key] = '';
+    this.configs.headers[key] = '';
     window.localStorage.removeItem(key);
   }
 
@@ -148,10 +199,7 @@ class ${sdkName} {
     `;
 };
 
-
-
-export function functionSignature({
-  hasPathParams,
+export function actionCreatorSignature({
   operationName,
   transformResponse,
   url,
@@ -159,29 +207,61 @@ export function functionSignature({
   isFormData
 }) {
   return `
-  ${operationName}({ _params,_pathParams${
-    requestMethod === "PUT" || requestMethod === "POST" ? ",..._data" : ""
-  } } = {}) {
+  ${operationName}(data) {
     return this.fetchApi({
+      operationName:'${operationName}',
       method: "${requestMethod}",${
     isFormData ? "\n      isFormData: true," : ""
   }
-      _url: '${url}',${
-    requestMethod === "PUT" || requestMethod === "POST" ? "\n     _data," : ""
-  }
-      _params,${hasPathParams ? "\n        _pathParams," : ""}${
-    transformResponse ? getTransformResString(operationName) : ""
-  }
+      _url: '${url}',
+       data,${transformResponse ? getTransformResString(operationName) : ""}
     });
   }
+  
   `;
 }
 
-export const getTransformResString = key =>
-  `\n      transformResponse:transformOperations['${key}'],`;
+export const initialStateStartString = `
+import { connect as reactReduxConnect } from "react-redux";
 
-export const endString = `
+
+const initialState ={
+`;
+
+export function initialStateKeyValuesString({ operationName }) {
+  return `
+  ${toCamelCase(operationName)}Res:{},`;
+}
+
+export const initialStateEndString = `
 }
 `;
 
+export const reducerStrings = ({ sdkName }) => {
+  return `\nexport function ${sdkName}Reducer(state = initialState, action) {
+  return {
+    ...state,
+    [action.type]: {
+      ...state[action.type],
+      ...action.payload
+    }
+  };
+}
 
+// helper function to use this syntax connect(['getUserRes'])(App)
+
+export const connect = function(a, b) {
+  const mapState = ({ ${sdkName}Reducer, ...otherState }) => {
+    if (Array.isArray(a)) {
+      let obj = {};
+      a.forEach(key => {
+        obj[key] = ${sdkName}Reducer[key];
+      });
+      return obj;
+    } else {
+      return a({ ${sdkName}Reducer, otherState });
+    }
+  };
+  return reactReduxConnect(mapState, b);
+};`;
+};
