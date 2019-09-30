@@ -1,56 +1,18 @@
 {
-  "name": "@vitwit/redux-sdkgen",
-  "version": "1.0.3",
-  "description": "Removes the boilerplate code for Redux apps with auto genereated SDK",
-  "main": "src/index.js",
-  "bin": {
-    "redux-sdkgen": "bin/redux-sdkgen"
-  },
-  "keywords": [
-    "redux",
-    "react",
-    "generator",
-    "code",
-    "sdk generator",
-    "js-sdkgen",
-    "JavaScript",
-    "cli",
-    "codegen",
-    "sdk",
-    "vitwit"
-  ],
-  "author": "Vitwit",
-  "contributors": [
-    "Yash Rathore <yash@vitwit.com> (https://github.com/vitwit/SDKGen.git)"
-  ],
-  "license": "MIT",
-  "dependencies": {
-    "arg": "^4.1.1",
-    "chalk": "^2.4.2",
-    "cp": "^0.2.0",
-    "esm": "^3.2.18",
-    "listr": "^0.14.3"
-  },
-  "files": [
-    "bin/",
-    "src/"
-  ],
+  "name": "vredux",
+  "version": "1.0.1",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/vitwit/SDKGen.git"
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "yash300": "0.0.1"
   },
-  "bugs": {
-    "url": "https://github.com/vitwit/SDKGen/issues"
-  },
-  "homepage": "https://github.com/vitwit/SDKGen#readme",
-  "devDependencies": {
-    "eslint": "^6.4.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-node": "^10.0.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1"
+  "peerDependencies": {
+    "esm": "^3.2.25"
   }
 }

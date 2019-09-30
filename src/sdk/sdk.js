@@ -1,62 +1,69 @@
+
 import axios from "axios";
 
-class Yash {
-  constructor(dispatch, headersObj = {}) {
-    this.dispatch = dispatch;
-    this.requiredHeaders = "";
-    this.optionalHeaders = "";
-    this.name = "Yash";
-    if (this.requiredHeaders) {
-      this.requiredHeaders.split(",").forEach(header => {
+
+export default class Mysdk {
+  constructor( headersObj ={}) {
+    this.version ='1.0.0'
+    this.requiredHeaders = '';
+    this.optionalHeaders = '';
+    this.name = "mysdk";
+
+    if(this.requiredHeaders){
+      this.requiredHeaders.split(',').forEach(header => {
         if (Object.keys(headersObj).indexOf(header) < 0) {
           throw Error("All required header to initiate not passed");
         }
       });
     }
+
     this.configs = {
-      baseURL: "",
+      baseURL: "localhost.com",
       headers: {
-        ...headersObj
+        ...headersObj,
       }
-    };
+    }
+
     const instance = axios.create({
       ...this.configs
     });
+
     // get authorization on every request
     instance.interceptors.request.use(
       configs => {
-        if (this.optionalHeaders) {
-          this.optionalHeaders.split(",").forEach(header => {
+        if(this.optionalHeaders){
+          this.optionalHeaders.split(',').forEach(header => {
             this.configs.headers[header] = this.getHeader(header);
           });
         }
-        configs.headers = this.configs.headers;
-        configs.baseURL = this.configs.baseURL;
-        return configs;
+        configs.headers = this.configs.headers
+        configs.baseURL = this.configs.baseURL
+
+        return configs
       },
       error => Promise.reject(error)
     );
+
     this.axiosInstance = instance;
   }
-
-  fetchApi({ isFormData, method, data, _url, transformResponse }) {
-    let _operationName = operationName;
-    const { _params, _pathParams, ..._data } = data;
-    if (_data.operationName) {
-      _operationName = _data.operationName;
-    }
-    this.dispatch({
-      type: _operationName + "Res",
-      payload: {
-        loading: true
-      }
-    });
+  
+  fetchApi({
+    isFormData,
+    method,
+    data = {},
+    _url,
+    transformResponse
+  }) {
+    const { _params = {}, _pathParams = {}, ..._data } = data;
+    // eslint-disable-next-line
     return new Promise(async resolve => {
       const obj = {
         error: null,
         data: null
       };
+
       let data = _data;
+
       if (isFormData) {
         const formdata = new FormData();
         Object.entries(_data).forEach(arr => {
@@ -86,14 +93,6 @@ class Yash {
             : {})
         });
         obj.data = resObj.data;
-        this.dispatch({
-          type: _operationName + "Res",
-          payload: {
-            loading: false,
-            data: resObj.data,
-            error: null
-          }
-        });
         resolve(obj);
       } catch (error) {
         if (error.response) {
@@ -103,19 +102,10 @@ class Yash {
         } else {
           obj.error = error.message;
         }
-        this.dispatch({
-          type: _operationName + "Res",
-          payload: {
-            loading: false,
-            error: obj.error,
-            data: null
-          }
-        });
         resolve(obj);
       }
     });
   }
-
   // intercept response
   interceptResponse(cb) {
     // just want to make user provide one callback,so mergin to callbacks
@@ -136,10 +126,15 @@ class Yash {
     );
   }
 
-  // --utils method for sdk class
+
+  // utils method for sdk class
   setHeader(key, value) {
     // Set optional header
-    this.configs.headers[key] = value;
+    this.configs.header[key] = value;
+
+    // storing in local storage to retrieve after reloads
+    // if you are managing refresh token and just storing token in memory
+    // than instead of using set Headers, just use interceptRequest and interceptResponse methods
     window.localStorage.setItem(key, value);
   }
 
@@ -149,11 +144,11 @@ class Yash {
     //Helps to check if the required header is present or not
     return window.localStorage.getItem(key);
   }
-
+  
   // --utils method for sdk class
   clearHeader(key) {
     // Clear optional header
-    this.configs.headers[key] = "";
+    this.configs.header[key] = '';
     window.localStorage.removeItem(key);
   }
 
@@ -168,184 +163,206 @@ class Yash {
   }
   // ------All api method----
 
+    
   addPet(data) {
     return this.fetchApi({
-      operationName: "addPet",
+      operationName:'addPet',
       method: "POST",
-      _url: "/pet",
-      data
+      _url: '/pet',
+       data,
     });
   }
-
+  
+  
   updatePet(data) {
     return this.fetchApi({
-      operationName: "updatePet",
+      operationName:'updatePet',
       method: "PUT",
-      _url: "/pet",
-      data
+      _url: '/pet',
+       data,
     });
   }
-
+  
+  
   findPetsByStatus(data) {
     return this.fetchApi({
-      operationName: "findPetsByStatus",
+      operationName:'findPetsByStatus',
       method: "GET",
-      _url: "/pet/findByStatus",
-      data
+      _url: '/pet/findByStatus',
+       data,
     });
   }
-
+  
+  
   findPetsByTags(data) {
     return this.fetchApi({
-      operationName: "findPetsByTags",
+      operationName:'findPetsByTags',
       method: "GET",
-      _url: "/pet/findByTags",
-      data
+      _url: '/pet/findByTags',
+       data,
     });
   }
-
+  
+  
   getPetById(data) {
     return this.fetchApi({
-      operationName: "getPetById",
+      operationName:'getPetById',
       method: "GET",
-      _url: "/pet/{petId}",
-      data
+      _url: '/pet/{petId}',
+       data,
     });
   }
-
+  
+  
   updatePetWithForm(data) {
     return this.fetchApi({
-      operationName: "updatePetWithForm",
+      operationName:'updatePetWithForm',
       method: "POST",
-      _url: "/pet/{petId}",
-      data
+      _url: '/pet/{petId}',
+       data,
     });
   }
-
+  
+  
   deletePet(data) {
     return this.fetchApi({
-      operationName: "deletePet",
+      operationName:'deletePet',
       method: "DELETE",
-      _url: "/pet/{petId}",
-      data
+      _url: '/pet/{petId}',
+       data,
     });
   }
-
+  
+  
   uploadFile(data) {
     return this.fetchApi({
-      operationName: "uploadFile",
+      operationName:'uploadFile',
       method: "POST",
       isFormData: true,
-      _url: "/pet/{petId}/uploadImage",
-      data
+      _url: '/pet/{petId}/uploadImage',
+       data,
     });
   }
-
+  
+  
   getInventory(data) {
     return this.fetchApi({
-      operationName: "getInventory",
+      operationName:'getInventory',
       method: "GET",
-      _url: "/store/inventory",
-      data
+      _url: '/store/inventory',
+       data,
     });
   }
-
+  
+  
   placeOrder(data) {
     return this.fetchApi({
-      operationName: "placeOrder",
+      operationName:'placeOrder',
       method: "POST",
-      _url: "/store/order",
-      data
+      _url: '/store/order',
+       data,
     });
   }
-
+  
+  
   getOrderById(data) {
     return this.fetchApi({
-      operationName: "getOrderById",
+      operationName:'getOrderById',
       method: "GET",
-      _url: "/store/order/{orderId}",
-      data
+      _url: '/store/order/{orderId}',
+       data,
     });
   }
-
+  
+  
   deleteOrder(data) {
     return this.fetchApi({
-      operationName: "deleteOrder",
+      operationName:'deleteOrder',
       method: "DELETE",
-      _url: "/store/order/{orderId}",
-      data
+      _url: '/store/order/{orderId}',
+       data,
     });
   }
-
+  
+  
   createUser(data) {
     return this.fetchApi({
-      operationName: "createUser",
+      operationName:'createUser',
       method: "POST",
-      _url: "/user",
-      data
+      _url: '/user',
+       data,
     });
   }
-
+  
+  
   createUsersWithArrayInput(data) {
     return this.fetchApi({
-      operationName: "createUsersWithArrayInput",
+      operationName:'createUsersWithArrayInput',
       method: "POST",
-      _url: "/user/createWithArray",
-      data
+      _url: '/user/createWithArray',
+       data,
     });
   }
-
+  
+  
   createUsersWithListInput(data) {
     return this.fetchApi({
-      operationName: "createUsersWithListInput",
+      operationName:'createUsersWithListInput',
       method: "POST",
-      _url: "/user/createWithList",
-      data
+      _url: '/user/createWithList',
+       data,
     });
   }
-
+  
+  
   loginUser(data) {
     return this.fetchApi({
-      operationName: "loginUser",
+      operationName:'loginUser',
       method: "GET",
-      _url: "/user/login",
-      data
+      _url: '/user/login',
+       data,
     });
   }
-
+  
+  
   logoutUser(data) {
     return this.fetchApi({
-      operationName: "logoutUser",
+      operationName:'logoutUser',
       method: "GET",
-      _url: "/user/logout",
-      data
+      _url: '/user/logout',
+       data,
     });
   }
-
+  
+  
   getUserByName(data) {
     return this.fetchApi({
-      operationName: "getUserByName",
+      operationName:'getUserByName',
       method: "GET",
-      _url: "/user/{username}",
-      data
+      _url: '/user/{username}',
+       data,
     });
   }
-
+  
+  
   updateUser(data) {
     return this.fetchApi({
-      operationName: "updateUser",
+      operationName:'updateUser',
       method: "PUT",
-      _url: "/user/{username}",
-      data
+      _url: '/user/{username}',
+       data,
     });
   }
-
+  
+  
   deleteUser(data) {
     return this.fetchApi({
-      operationName: "deleteUser",
+      operationName:'deleteUser',
       method: "DELETE",
-      _url: "/user/{username}",
-      data
+      _url: '/user/{username}',
+       data,
     });
   }
+  
+  
 }

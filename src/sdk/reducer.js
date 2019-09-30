@@ -1,5 +1,6 @@
 
-import * as reactRedux from "react-redux";
+import { connect as reactReduxConnect } from "react-redux";
+
 
 const initialState ={
 
@@ -25,7 +26,7 @@ const initialState ={
   deleteUserRes:{},
 }
 
-export function yashReducer(state = initialState, action) {
+export function MysdkReducer(state = initialState, action) {
   return {
     ...state,
     [action.type]: {
@@ -38,16 +39,16 @@ export function yashReducer(state = initialState, action) {
 // helper function to use this syntax connect(['getUserRes'])(App)
 
 export const connect = function(a, b) {
-  const mapState = ({ yashReducer, ...otherState }) => {
+  const mapState = ({ MysdkReducer, ...otherState }) => {
     if (Array.isArray(a)) {
       let obj = {};
       a.forEach(key => {
-        obj[key] = yashReducer[key];
+        obj[key] = MysdkReducer[key];
       });
       return obj;
     } else {
-      return a({ yashReducer, otherState });
+      return a({ MysdkReducer, otherState });
     }
   };
-  return reactRedux.connect(mapState, b);
+  return reactReduxConnect(mapState, b);
 };
