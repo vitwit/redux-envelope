@@ -5,7 +5,8 @@ import {
   initialStateKeyValuesString,
   initialStateEndString,
   reducerStrings,
-  actionCreatorSignature
+  actionCreatorSignature,
+  stringOneWithActions
 } from "./code-strings/reduce-strings";
 
 // sorry for this name
@@ -15,7 +16,8 @@ export class CodePlusDocGenPlusRedux extends CodePlusDocGen {
     this.reducerFileStrings = [];
     this.initialStateStrings = [];
     // just overide the default apiMethodSignature as we also need operationName for our tiny reducer to work.
-    this.apiMethodSignatureString = actionCreatorSignature
+    this.apiMethodSignatureString = actionCreatorSignature;
+    this.sdkClassStartString =stringOneWithActions;
   }
 
   justBeforeLoopingOverJson() {

@@ -1,6 +1,6 @@
 {
-  "name": "vredux",
-  "version": "1.0.1",
+  "name": "redux-envelope",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {

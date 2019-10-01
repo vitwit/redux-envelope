@@ -22,7 +22,7 @@ ${
 class ${sdkName} {
   constructor(dispatch, headersObj ={}) {${
     version ? "\n    this.version =" : ""
-  }${version || ""}
+  }'${version}'
     this.dispatch = dispatch;
     this.requiredHeaders = '${requiredHeaders}';
     this.optionalHeaders = '${optionalHeaders}';
