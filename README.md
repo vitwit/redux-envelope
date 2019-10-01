@@ -2,7 +2,7 @@
 
 ## It completly removes the Redux's boilerplate it had been always critcized for, no need to write any action creator or any reducer.
 
-Redux-disptach-wrapper is extends version of `@vitwit/js-sdkgen.`
+Redux-disptach-wrapper is extends version of [@vitwit/js-sdkgen](https://www.npmjs.com/package/@vitwit/js-sdkgen)
 
 It does one extra things from `js-sdkgen`.
 
