@@ -1,18 +1,18 @@
-# vRedux
+# Redux Envelope
 
 ## It completly removes the Redux's boilerplate it had been always critcized for, no need to write any action creator or any reducer.
 
-Redux-disptach-wrapper is extends version of `@vitwit/js-sdkgen.`
+Redux Envelope is an extension on top of `@vitwit/js-sdkgen.`
 
 It does one extra things from `js-sdkgen`.
 
-- `--with-readux-configs` flag, when you pass this flag it will generate sdk class which accepts `dispatch` function while initiating. This `dispatch` should from the same store instance you are providing to `react-redux`.
+- It will generate sdk class which accepts `dispatch` function while initiating. This `dispatch` should from the same store instance you are providing to `react-redux`.
 - Every method's response will be stored in the sdk reducer with method's name appended with 'Res' for example `getUsers` response will be stored as `getUserRes`.
 
 Given the swaggger.json file in root folder of the repo, running below command will generate the code in sdk folder of the repo.
 
 ```sh
-vRedux --json-file swagger.json  --name myApp --version 1.0.0 --base-url="https://vitwit.com" --required-headers name,lastname --optional-headers token --with-redux-configs
+redux-envelope --json-file swagger.json  --name myApp --version 1.0.0 --base-url="https://vitwit.com" --required-headers name,lastname --optional-headers token --with-redux-configs
 ```
 
 **Follow the below steps to configure**

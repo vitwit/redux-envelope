@@ -1,7 +1,6 @@
 import fs from "fs";
 import chalk from "chalk";
 import { parseArgumentsIntoOptions, Schedular } from "@vitwit/js-sdkgen";
-import { actionCreatorSignature } from "./code-strings/reduce-strings";
 import { CodePlusDocGenPlusRedux } from "./main";
 
 export async function cli(args) {
