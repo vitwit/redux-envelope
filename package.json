@@ -1,7 +1,7 @@
 {
-  "name": "redux-envelope",
-  "version": "1.0.0",
-  "description": "",
+  "name": "@vitwit/redux-envelope",
+  "version": "1.0.1",
+  "description": "Redux Simplified. No extra code needed for actions and reducers, redux-envelope generates it all for you",
   "main": "index.js",
   "bin": {
     "redux-envelope": "bin/redux-envelope"
@@ -9,15 +9,29 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Vitwit",
+  "license": "MIT",
   "dependencies": {
     "chalk": "^2.4.2",
     "@vitwit/js-sdkgen": "2.0.5"
   },
   "peerDependencies": {
     "esm": "^3.2.25"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vitwit/redux-envelope.git"
+  },
+  "keywords": [
+    "redux",
+    "redux-envolope",
+    "autogen",
+    "codegen"
+  ],
+  "bugs": {
+    "url": "https://github.com/vitwit/redux-envelope/issues"
+  },
+  "homepage": "https://github.com/vitwit/redux-envelope#readme"
 }
 
 
