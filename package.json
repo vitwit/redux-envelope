@@ -10,7 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "chalk": "^2.4.2",
-    "yash300": "0.0.1"
+    "@vitwit/js-sdkgen": "2.0.5"
   },
   "peerDependencies": {
     "esm": "^3.2.25"
