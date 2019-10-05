@@ -3,6 +3,9 @@
   "version": "1.0.3",
   "description": "Redux Simplified. No extra code needed for actions and reducers, redux-envelope generates it all for you",
   "main": "index.js",
+  "bin": {
+    "redux-envelope": "bin/redux-envelope"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -30,3 +33,5 @@
   },
   "homepage": "https://github.com/vitwit/redux-envelope#readme"
 }
+
+
