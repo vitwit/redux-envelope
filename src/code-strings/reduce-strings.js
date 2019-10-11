@@ -19,7 +19,7 @@ ${
     ? "import { transformOperations } from './transformOperations'"
     : ""
 }
-class ${sdkName} {
+export default class ${sdkName} {
   constructor(dispatch, headersObj ={}) {${
     version ? "\n    this.version =" : ""
   }'${version}'
