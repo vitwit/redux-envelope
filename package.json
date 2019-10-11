@@ -13,7 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "chalk": "^2.4.2",
-    "@vitwit/js-sdkgen": "2.0.5"
+    "@vitwit/js-sdkgen": "^2.0.8"
   },
   "peerDependencies": {
     "esm": "^3.2.25"
