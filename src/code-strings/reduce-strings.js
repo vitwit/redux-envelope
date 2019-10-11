@@ -1,4 +1,4 @@
-import { utils } from "yash300";
+import { utils } from "@vitwit/js-sdkgen";
 
 const { toCamelCase ,getTransformResString} = utils;
 
