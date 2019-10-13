@@ -43,7 +43,7 @@ export { myApp };
 > in any component in your app for example `App.js`
 
 ```js
-import react from "react";
+import React from "react";
 import { myApp } from "./sdk";
 import { connect } from "react-redux";
 
