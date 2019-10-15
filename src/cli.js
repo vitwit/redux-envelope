@@ -10,7 +10,7 @@ export async function cli(args) {
 
     process.exit(1);
   }
-  const schedular = new Schedular(options);
+  const schedular = new Schedular(options,{pkg:"redux envelope"});
   schedular.CodeGenToUse = CodePlusDocGenPlusRedux;
   await schedular.generateSDK();
 }
