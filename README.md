@@ -22,7 +22,7 @@ redux-envelope --json-file swagger.json  --name myApp --version 1.0.0 --base-url
 ```js
 import { store, createStore, combineReducers } from "redux";
 
-import  {myAppReducer}  from "./sdk/reducer";
+import  { myAppReducer }  from "./sdk/reducer";
 
 store.createStore(combineReducers({ myAppReducer }));
 const disptach = store.dispatch;
@@ -35,7 +35,7 @@ export {dispatch};
 
 ```js
 import { dispatch } from "../redux";
-import MyApp from "./myApp.js";
+import MyApp from "./myApp";
 const myApp = new MyApp(dispatch, { requiedParams1: "" });
 export { myApp };
 ```
@@ -43,9 +43,9 @@ export { myApp };
 > in any component in your app for example `App.js`
 
 ```js
-import react from "react";
+import React from "react";
 import { myApp } from "./sdk";
-import connect from "react-redux";
+import { connect } from "react-redux";
 
 class App extends React.Component {
   componentDidMount() {
