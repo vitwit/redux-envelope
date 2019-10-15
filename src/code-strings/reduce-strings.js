@@ -1,4 +1,4 @@
-import { utils } from "yash300";
+import { utils } from "@vitwit/js-sdkgen";
 
 const { toCamelCase ,getTransformResString} = utils;
 
@@ -19,7 +19,7 @@ ${
     ? "import { transformOperations } from './transformOperations'"
     : ""
 }
-class ${sdkName} {
+export default class ${sdkName} {
   constructor(dispatch, headersObj ={}) {${
     version ? "\n    this.version =" : ""
   }'${version}'
