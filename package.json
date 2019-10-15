@@ -1,6 +1,6 @@
 {
   "name": "@vitwit/redux-envelope",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Redux Simplified. No extra code needed for actions and reducers, redux-envelope generates it all for you",
   "main": "index.js",
   "bin": {
