@@ -12,8 +12,8 @@
   "author": "Vitwit",
   "license": "MIT",
   "dependencies": {
-    "chalk": "^2.4.2",
-    "@vitwit/js-sdkgen": "^2.0.8"
+    "@vitwit/js-sdkgen": "^2.0.9",
+    "chalk": "^2.4.2"
   },
   "peerDependencies": {
     "esm": "^3.2.25"
