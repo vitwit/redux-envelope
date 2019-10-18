@@ -1,8 +1,6 @@
 import { utils } from "@vitwit/js-sdkgen";
 
-const { toCamelCase ,getTransformResString} = utils;
-
-
+const { toCamelCase, getTransformResString } = utils;
 
 export const stringOneWithActions = ({
   sdkName,
@@ -169,6 +167,16 @@ export default class ${sdkName} {
     // Set optional header
     this.configs.headers[key] = value;
     window.localStorage.setItem(key, value);
+  }
+  resetState(key) {
+    this.dispatch({
+      type: key,
+      payload:{
+        loading:false,
+        error:null,
+        data:null
+      }
+    })
   }
 
   // eslint-disable-next-line
