@@ -1,6 +1,6 @@
 {
   "name": "@vitwit/redux-envelope",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "Redux Simplified. No extra code needed for actions and reducers, redux-envelope generates it all for you",
   "main": "index.js",
   "bin": {
@@ -12,7 +12,7 @@
   "author": "Vitwit",
   "license": "MIT",
   "dependencies": {
-    "@vitwit/js-sdkgen": "^2.0.9",
+    "@vitwit/js-sdkgen": "*",
     "axios": "^0.19.0",
     "chalk": "^2.4.2",
     "react-redux": "^7.1.1",
